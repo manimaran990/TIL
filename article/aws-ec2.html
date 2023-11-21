@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>AWS EC2 - Today I Learned</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">AWS EC2</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1700184039863"
+                  >2023-11-16 20:20</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1700231662206"
+                  >2023-11-17 09:34</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h1 id="aws-ec2-quick-start">AWS EC2 Quick-start</h1>
+<p><code>EC2 &gt; Instances &gt; Launch an instanec</code></p>
+<ul>
+<li>Name : demo-ubuntu</li>
+<li>Application and OS Images - Ubuntu</li>
+<li>AMI - Ubuntu Server</li>
+<li>Architecture - 64bit</li>
+<li>Instance type - t2.micro</li>
+<li>key pair (login) - generate key</li>
+<li>Network settings - edit</li>
+<li>Augo-assign public IP - Enable</li>
+<li>Firewall (seucurity groups) - create security group</li>
+<li>Configure storage - 1x 8 GB</li>
+<li>Launch Instance</li>
+</ul>
+<h2 id="by-default-pem-key-permission-with-664">By default pem key permission with 664</h2>
+<p><code>$ stat -c %a demo-key.pem</code><br />
+664</p>
+<h2 id="to-change-pem-key-readwrite-permission-only-to-user">To change pem key read/write permission only to user</h2>
+<p><code>$ sudo chmod 600 demo-key.pem</code></p>
+<p><code>ssh -i demo.key.pem ubuntu@public\_ip</code></p>
+<p><code>sudo passwd root</code></p>
+<p><code>sudo apt update</code></p>
+<h2 id="to-check-the-public-ip">To check the public IP</h2>
+<div><pre class="hljs"><code><span class="hljs-built_in">curl</span> icanhazip.com
+
+<span class="hljs-built_in">curl</span> ifconfig.me
+
+<span class="hljs-built_in">curl</span> http://checkip.amazonaws.com</code></pre></div>
+<h2 id="to-install-apache2-server">To install apache2 server</h2>
+<p><code>sudo apt install apache2 -y</code></p>
+<h2 id="enable-start-and-check-status-of-service">enable, start and check status of service</h2>
+<p><code>sudo systemctl start apache2</code></p>
+<p><code>sudo systemctl enable apache2</code></p>
+<p><code>sudo systemctl status apache2</code></p>
+<h2 id="to-enable-port-80">To enable port 80</h2>
+<p><code>EC2 &gt; Security Groups &gt; Edit Inbound Rules &gt; add port 80</code></p>
+<h2 id="ip">IP</h2>
+<p>By default dynamic IP will be given</p>
+<p>5 Elastic(static) IP can be given free<br />
+if those IPs are inactive it will be charged for that idle time</p>
+<h2 id="install-app">install app</h2>
+<p><code>sudo apt install apache2 -y</code></p>
+<div><pre class="hljs"><code>sudo<span class="hljs-keyword"> system</span>ctl enable apache2
+sudo<span class="hljs-keyword"> system</span>ctl start apache2
+sudo<span class="hljs-keyword"> system</span>ctl status apache2</code></pre></div>
+<h2 id="access-the-public-ip-in-browser">Access the public IP in browser</h2>
+<p>To allow http change the security groups</p>
+<p><code>EC2 &gt; Security Groups &gt; Add Rule &gt; add http port 80</code></p>
+<p>Now access the ip in browser, server will be up and running</p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

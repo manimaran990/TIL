@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Django Cheatsheet - Today I Learned</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Django Cheatsheet</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1698364240000"
+                  >2023-10-26 19:50</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1700239533539"
+                  >2023-11-17 11:45</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">cheatsheet</span>
+              
+              <span class="keyword">python</span>
+              
+              <span class="keyword">django</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><ol>
+<li>
+<p>Install Django:</p>
+<p>Copy code</p>
+<p><code>pip install django</code></p>
+</li>
+<li>
+<p>Create a Django project:</p>
+<p>Copy code</p>
+<p><code>django-admin startproject project_name</code></p>
+</li>
+<li>
+<p>Create a Django app:</p>
+<p>Copy code</p>
+<p><code>python manage.py startapp app_name</code></p>
+</li>
+<li>
+<p>Run the development server:</p>
+<p>Copy code</p>
+<p><code>python manage.py runserver</code></p>
+</li>
+<li>
+<p>Database migrations:</p>
+<p>Copy code</p>
+<p><code>python manage.py makemigrations python manage.py migrate</code></p>
+</li>
+<li>
+<p>Create a Django model:</p>
+<p>pythonCopy code</p>
+<div><pre class="hljs"><code><span class="hljs-title">from</span> django.db <span class="hljs-keyword">import</span> models
+<span class="hljs-class">
+<span class="hljs-keyword">class</span> <span class="hljs-type">ModelName</span>(<span class="hljs-title">models</span>.<span class="hljs-type">Model</span>):     
+    field_name = models.<span class="hljs-type">FieldType</span>(<span class="hljs-title">options</span>)</span></code></pre></div>
+</li>
+<li>
+<p>Register a model with Django admin:</p>
+<p>pythonCopy code</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> <span class="hljs-keyword">admin</span> 
+<span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> ModelName  
+
+<span class="hljs-keyword">admin</span>.site.register(ModelName)</code></pre></div>
+</li>
+<li>
+<p>Create a Django view:</p>
+<p>pythonCopy code</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">from</span> django.http <span class="hljs-keyword">import</span> HttpResponse
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">view_name</span>(<span class="hljs-params">request</span>):
+    <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">"Hello, World!"</span>)</code></pre></div>
+</li>
+<li>
+<p>Create a URL pattern:</p>
+<p>pythonCopy code</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> <span class="hljs-type">path</span> <span class="hljs-keyword">from</span> . <span class="hljs-keyword">import</span> views  
+urlpatterns = [ path(<span class="hljs-string">'url_path/'</span>, views.view_name, <span class="hljs-type">name</span>=<span class="hljs-string">'url_name'</span>), ]</code></pre></div>
+</li>
+<li>
+<p>Render a Django template:</p>
+</li>
+</ol>
+<div><pre class="hljs"><code><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">view_name</span>(<span class="hljs-params">request</span>):
+        <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">'template_name.html'</span>, context)</code></pre></div>
+<ol start="11">
+<li>Use Django template tags and filters:</li>
+</ol>
+<pre><code>cssCopy code
+
+`{% tag %} {{ variable|filter }}`
+</code></pre>
+<ol start="12">
+<li>Create a Django form:</li>
+</ol>
+<div><pre class="hljs"><code><span class="hljs-keyword">from</span> django <span class="hljs-keyword">import</span> forms <span class="hljs-keyword">from</span> .models
+<span class="hljs-keyword">import</span> ModelName  
+<span class="hljs-keyword">class</span> FormName(forms.ModelForm):
+    <span class="hljs-keyword">class</span> Meta:
+        model = ModelName
+        fields = [<span class="hljs-string">'field1'</span>, <span class="hljs-string">'field2'</span>]</code></pre></div>
+<ol start="13">
+<li>Use Django forms in templates:</li>
+</ol>
+<div><pre class="hljs"><code><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"post"</span>&gt;</span>     </span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">csrf_token</span></span> %}</span><span class="language-xml">     </span><span class="hljs-template-variable">{{ form.as_p }}</span><span class="language-xml">     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span></code></pre></div>
+<ol start="14">
+<li>Django authentication views and URLs:</li>
+</ol>
+<div><pre class="hljs"><code>django<span class="hljs-selector-class">.contrib</span><span class="hljs-selector-class">.auth</span><span class="hljs-selector-class">.views</span><span class="hljs-selector-class">.LoginView</span>
+django<span class="hljs-selector-class">.contrib</span><span class="hljs-selector-class">.auth</span><span class="hljs-selector-class">.views</span><span class="hljs-selector-class">.LogoutView</span>  
+django<span class="hljs-selector-class">.contrib</span><span class="hljs-selector-class">.auth</span><span class="hljs-selector-class">.views</span><span class="hljs-selector-class">.PasswordChangeView</span>
+django<span class="hljs-selector-class">.contrib</span><span class="hljs-selector-class">.auth</span><span class="hljs-selector-class">.views</span>.PasswordResetView</code></pre></div>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

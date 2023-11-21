@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Puppet in Local - Today I Learned</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Puppet in Local</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1698976995165"
+                  >2023-11-02 22:03</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1699069227597"
+                  >2023-11-03 23:40</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">puppet</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><blockquote>
+<p>sudo apt install puppet-master</p>
+</blockquote>
+<p>Manifest - ends with .pp</p>
+<div><pre class="hljs"><code>(base) mani@mani-lappy:~/puppet$ cat tools.pp
+<span class="hljs-keyword">package</span> { <span class="hljs-string">'htop'</span>:
+  <span class="hljs-attr">ensure</span> =&gt; <span class="hljs-literal">present</span>,
+}</code></pre></div>
+<blockquote>
+<p>sudo puppet apply -v tools.pp</p>
+</blockquote>
+<h2 id="resource-relationship">Resource Relationship</h2>
+<div><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title">ntp</span> {
+  <span class="hljs-keyword">package</span> { <span class="hljs-string">'ntp'</span>:
+    <span class="hljs-attr">ensure</span> =&gt; latest,
+  }
+  <span class="hljs-keyword">file</span> { <span class="hljs-string">'/etc/ntp.conf'</span>:
+    <span class="hljs-attr">source</span> =&gt; <span class="hljs-string">'/home/user/ntp.conf'</span>,
+    <span class="hljs-attr">replace</span> =&gt; <span class="hljs-keyword">true</span>,
+    <span class="hljs-attr">require</span> =&gt; Package[<span class="hljs-string">'ntp'</span>],
+    <span class="hljs-attr">notify</span> =&gt; Service[<span class="hljs-string">'ntp'</span>],
+  }
+  <span class="hljs-keyword">service</span> { <span class="hljs-string">'ntp'</span>:
+    <span class="hljs-attr">enable</span> =&gt; <span class="hljs-keyword">true</span>,
+    <span class="hljs-attr">ensure</span> =&gt; <span class="hljs-literal">running</span>,
+    <span class="hljs-attr">require</span> =&gt; File[<span class="hljs-string">'/etc/ntp.conf'</span>],
+ }
+}
+
+include ntp</code></pre></div>
+<h2 id="organizing-puppet-modules">Organizing Puppet Modules</h2>
+<p>A <em>module</em> is an easy way to organize our configuration management tools.</p>
+<p><img src="/_resources/f43815a8865348cdb861abd8d15745d6.png" /></p>
+<ul>
+<li>
+<p><ins class="jop-noMdConv"><a title="https://puppet.com/docs/puppet/latest/style_guide.html" href="https://puppet.com/docs/puppet/latest/style_guide.html">https://puppet.com/docs/puppet/latest/style_guide.html</a></ins></p>
+</li>
+<li>
+<p><ins class="jop-noMdConv"><a title="https://puppet.com/docs/puppetserver/latest/install_from_packages.html" href="https://puppet.com/docs/puppetserver/latest/install_from_packages.html">https://puppet.com/docs/puppetserver/latest/install_from_packages.html</a></ins></p>
+</li>
+</ul>
+<h2 id="puppet-nodes">Puppet Nodes</h2>
+<p>Different kinds of nodes are defined, allowing different sets of rule catalogs to apply to different types of machines.</p>
+<p>node definitions are stored in <strong>site.pp</strong></p>
+<p><strong>Deploying Puppet to Clients</strong></p>
+<ul>
+<li><ins class="jop-noMdConv"><a title="http://www.masterzen.fr/2010/11/14/puppet-ssl-explained/" href="http://www.masterzen.fr/2010/11/14/puppet-ssl-explained/">http://www.masterzen.fr/2010/11/14/puppet-ssl-explained/</a></ins></li>
+</ul>
+<p>puppet parser validate</p>
+<p>The puppet parser validate command checks the syntax of the manifest to make sure it's correct.</p>
+<ul>
+<li>
+<p><ins class="jop-noMdConv"><a title="https://rspec-puppet.com/tutorial/" href="https://rspec-puppet.com/tutorial/">https://rspec-puppet.com/tutorial/</a></ins></p>
+</li>
+<li>
+<p><ins class="jop-noMdConv"><a title="http://puppet-lint.com/" href="http://puppet-lint.com/">http://puppet-lint.com/</a></ins></p>
+</li>
+</ul>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

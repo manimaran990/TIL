@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title></title>
+        <link>undefined</link>
+        <description>undefined</description>
+        <lastBuildDate>Tue, 21 Nov 2023 03:04:24 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>Joplin Pages Publisher</generator>
+        <item>
+            <title><![CDATA[AWS EBS]]></title>
+            <guid>131289fb26d74c03bfd535a5d2254d71</guid>
+            <pubDate>Tue, 21 Nov 2023 01:09:41 GMT</pubDate>
+            <content:encoded><![CDATA[<h2 id="elastic-block-store">Elastic Block Store</h2>
+<p>Block storage service, N number of block storages can be attached to one instance. Just like additional storage.</p>
+<ul>
+<li>Create an EC2 instance</li>
+<li>Create a volumne from dashboard</li>
+<li>Select and attach that volumne to an instance</li>
+</ul>
+<p><code>df -Th</code></p>
+<img src="/_resources/4be9a8b6c32b4b02849a2fc1cd0a55e2.png" alt="dc16d6291719b2818d8c52ce1ccc6ecf.png" width="517" height="181" class="jop-noMdConv" />
+<p><code>lsblk</code></p>
+<img src="/_resources/80b6839e4213454ea341d37f2486710e.png" alt="46c67f7840f07bcc11a75c376b2ba168.png" width="554" height="244" class="jop-noMdConv" />
+<p><code>sudo file -s /dev/xvdf</code></p>
+<img src="/_resources/535c596beb5c4d18b1080edd620a63ad.png" alt="ac058855ce6414a1fa6a1817936f3108.png" width="503" height="64" class="jop-noMdConv" />
+<h1 id="to-format">To format</h1>
+<p><code>sudo mkfs -t ext4 /dev/xvdf</code></p>
+<img src="/_resources/4317a79b47594eb9a424c15d120affba.png" alt="f49d471f4142056db5e8b2d7e2759da3.png" width="588" height="209" class="jop-noMdConv" />
+<h1 id="to-mount">To mount:</h1>
+<div><pre class="hljs"><code>sudo mkdir /data
+
+sudo <span class="hljs-keyword">file</span> -s <span class="hljs-regexp">/dev/</span>xvdf
+
+sudo mount <span class="hljs-regexp">/dev/</span>xvdf /data
+
+df -Th</code></pre></div>
+<img src="/_resources/2b396dac46a5489d80312230dde4e250.png" alt="3f7fe450331b8ce5c7bc22609c623d9b.png" width="961" height="263" class="jop-noMdConv" />
+<h1 id="to-permanently-mount-them-on-on-startup">To permanently mount them on on startup:</h1>
+<div><pre class="hljs"><code>sudo cp <span class="hljs-regexp">/etc/</span>fstab <span class="hljs-regexp">/etc/</span>fstab.bak
+
+sudo blkid
+
+sudo vi <span class="hljs-regexp">/etc/</span>fstab</code></pre></div>
+<p>add entry: /dev/xvdf    /data      ext4     defaults,nofail 0 2</p>
+<img src="/_resources/63ae8c56049d46c4b4e6770daa148ec2.png" alt="80a3dbab43901f98047b0208b7e35cd1.png" width="1001" height="318" class="jop-noMdConv" />
+<h1 id="to-unmount">To unmount</h1>
+<p><code>sudo umount /data</code></p>
+<h1 id="billing-calculator">Billing calculator</h1>
+<p><a title="https://calculator.aws/#/addService/EBS" href="https://calculator.aws/#/addService/EBS">https://calculator.aws/#/addService/EBS</a></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[AWS Lightsail]]></title>
+            <guid>ad624dc03a044976aad113a54b6545f6</guid>
+            <pubDate>Sat, 18 Nov 2023 01:09:03 GMT</pubDate>
+            <content:encoded><![CDATA[<h2 id="lightsail">Lightsail</h2>
+<ul>
+<li>Quickly spinup linux servers</li>
+<li>low cost</li>
+<li>Per month plan</li>
+<li>No security groups</li>
+<li>Dynamic IP will be provided on each start</li>
+</ul>
+<h2 id="getting-started">Getting started</h2>
+<ul>
+<li>Console &gt; search Lightsail</li>
+<li>Comes with OS or Bundled with APP</li>
+<li>Create new SSH key pair</li>
+<li>Choose plan and create instance</li>
+</ul>
+<p><code>ssh -i mykey.pem ubuntu@publicip</code></p>
+<h2 id="static-ip">Static IP</h2>
+<p>Network &gt; Create a static IP<br />
+Those static IPs should be attached to instance</p>
+<h1 id="attach-ebs-to-lightsail-instance">Attach EBS to Lightsail instance</h1>
+<ul>
+<li>Create Lightsail Instance</li>
+<li>Click Storage - Create disk</li>
+<li>Create a disk</li>
+<li>Attach disk to active instance</li>
+<li>format and mount the file system via shell</li>
+<li>add an entry in /etc/fstab to mount it on system startup</li>
+</ul>
+<h2 id="to-delete-volumne">To delete volumne</h2>
+<ul>
+<li>Stop the instance</li>
+<li>detach the volumne</li>
+<li>delete the volumne</li>
+</ul>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[AWS EC2]]></title>
+            <guid>bae0baccbb3345848699922793947c58</guid>
+            <pubDate>Fri, 17 Nov 2023 01:20:39 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="aws-ec2-quick-start">AWS EC2 Quick-start</h1>
+<p><code>EC2 &gt; Instances &gt; Launch an instanec</code></p>
+<ul>
+<li>Name : demo-ubuntu</li>
+<li>Application and OS Images - Ubuntu</li>
+<li>AMI - Ubuntu Server</li>
+<li>Architecture - 64bit</li>
+<li>Instance type - t2.micro</li>
+<li>key pair (login) - generate key</li>
+<li>Network settings - edit</li>
+<li>Augo-assign public IP - Enable</li>
+<li>Firewall (seucurity groups) - create security group</li>
+<li>Configure storage - 1x 8 GB</li>
+<li>Launch Instance</li>
+</ul>
+<h2 id="by-default-pem-key-permission-with-664">By default pem key permission with 664</h2>
+<p><code>$ stat -c %a demo-key.pem</code><br />
+664</p>
+<h2 id="to-change-pem-key-readwrite-permission-only-to-user">To change pem key read/write permission only to user</h2>
+<p><code>$ sudo chmod 600 demo-key.pem</code></p>
+<p><code>ssh -i demo.key.pem ubuntu@public\_ip</code></p>
+<p><code>sudo passwd root</code></p>
+<p><code>sudo apt update</code></p>
+<h2 id="to-check-the-public-ip">To check the public IP</h2>
+<div><pre class="hljs"><code><span class="hljs-built_in">curl</span> icanhazip.com
+
+<span class="hljs-built_in">curl</span> ifconfig.me
+
+<span class="hljs-built_in">curl</span> http://checkip.amazonaws.com</code></pre></div>
+<h2 id="to-install-apache2-server">To install apache2 server</h2>
+<p><code>sudo apt install apache2 -y</code></p>
+<h2 id="enable-start-and-check-status-of-service">enable, start and check status of service</h2>
+<p><code>sudo systemctl start apache2</code></p>
+<p><code>sudo systemctl enable apache2</code></p>
+<p><code>sudo systemctl status apache2</code></p>
+<h2 id="to-enable-port-80">To enable port 80</h2>
+<p><code>EC2 &gt; Security Groups &gt; Edit Inbound Rules &gt; add port 80</code></p>
+<h2 id="ip">IP</h2>
+<p>By default dynamic IP will be given</p>
+<p>5 Elastic(static) IP can be given free<br />
+if those IPs are inactive it will be charged for that idle time</p>
+<h2 id="install-app">install app</h2>
+<p><code>sudo apt install apache2 -y</code></p>
+<div><pre class="hljs"><code>sudo<span class="hljs-keyword"> system</span>ctl enable apache2
+sudo<span class="hljs-keyword"> system</span>ctl start apache2
+sudo<span class="hljs-keyword"> system</span>ctl status apache2</code></pre></div>
+<h2 id="access-the-public-ip-in-browser">Access the public IP in browser</h2>
+<p>To allow http change the security groups</p>
+<p><code>EC2 &gt; Security Groups &gt; Add Rule &gt; add http port 80</code></p>
+<p>Now access the ip in browser, server will be up and running</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[AWS Services]]></title>
+            <guid>06438e8e9eac446eb4824ddafedfcc07</guid>
+            <pubDate>Thu, 09 Nov 2023 19:18:41 GMT</pubDate>
+            <content:encoded><![CDATA[<h2 id="s3-simple-storage-service">S3 - Simple Storage Service</h2>
+<p>Using amazon S3 we can store and retrieve any amount of data from anywhere, also store any type of data.</p>
+<p><strong>bucket</strong> is a container for objects</p>
+<p>objects any type of file and any metadata that describes the file</p>
+<p>used to store photos/videos also host static websites</p>
+<h2 id="amazon-elastic-compute-cloud">Amazon Elastic Compute Cloud</h2>
+<p>Amazon Elastic Compute Cloud, or amazon EC2, is a web service that provides reliable, scalable, compute capacity in the cloud so that you can launch virtual servers in minutes.</p>
+<h2 id="amazon-rds">Amazon RDS</h2>
+<p>Relational Database Service(RDS), which is fully managed and removes the need for manual database infrastructure provisioning and maintenance.</p>
+<p>Amazon RDS automates backups, database snapshots and host replacement to reduce the administrative burden.</p>
+<p>To achieve high availability, deploy your database across multiple availability zones(AZs). In a mutil-AZ deployment, Amazon RDS automatically creates a primary DB instance and</p>
+<p>synchronously replicates the data to an instance in a different AZ</p>
+<p> </p>
+<h2 id="amazon-dynamodb">Amazon DynamoDB</h2>
+<p>key, value and document database</p>
+<p>NoSQL DB, no need of schema, automatically scales, and single digit millisecond latency</p>
+<p>support partiion key only or partition key+sort key</p>
+<h2 id="amazon-efs">Amazon EFS</h2>
+<p>Elastic File System is a serverless, set and forget solution that you can use to share file data without provisioning or managing storage.</p>
+<p>Using Amazon EFS, we can create shared network drives so that your branches can access pet client photos from a central location, and you can restrict access with file-level permissions.</p>
+<p>Amazon EFS provides petabyte-scale storage that grows and shrinks automatically as you add and remove files.</p>
+<p>EFS is highly available and high percent durability. EFS object is redundantly stored across multiple availability zones.  It's designed to sustain concurrent device failures by quickly detecting and repairing any lost redundancy</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Puppet Deployment]]></title>
+            <guid>c2b64a8cdc4f485ea677c2e955554f0e</guid>
+            <pubDate>Sat, 04 Nov 2023 18:15:21 GMT</pubDate>
+            <content:encoded><![CDATA[<h2 id="install-packages">Install Packages</h2>
+<blockquote>
+<p>cd /etc/puppet/code/environments/production/modules/packages</p>
+<p>cat manifests/init.pp</p>
+</blockquote>
+<div><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title">packages</span> {
+    <span class="hljs-keyword">package</span> { <span class="hljs-string">'python-requests'</span>:
+        <span class="hljs-attr">ensure</span> =&gt; installed,
+    }
+
+}</code></pre></div>
+<blockquote>
+<p>sudo chmod 646 manifests/init.pp</p>
+</blockquote>
+<div><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title">packages</span> {
+   <span class="hljs-keyword">package</span> { <span class="hljs-string">'python-requests'</span>:
+       <span class="hljs-attr">ensure</span> =&gt; installed,
+   }
+   <span class="hljs-keyword">if</span> $facts[os][family] == <span class="hljs-string">"Debian"</span> {
+     <span class="hljs-keyword">package</span> { <span class="hljs-string">'golang'</span>:
+       <span class="hljs-attr">ensure</span> =&gt; installed,
+     }
+  }
+   if <span class="hljs-variable">$facts</span>[os][family] == <span class="hljs-string">"RedHat"</span> {
+     <span class="hljs-keyword">package</span> { <span class="hljs-string">'nodejs'</span>:
+       <span class="hljs-attr">ensure</span> =&gt; installed,
+     }
+  }
+}</code></pre></div>
+<blockquote>
+<p>sudo puppet agent -v --test</p>
+</blockquote>
+<p>Fetch machine information</p>
+<p>cat manifests/init.pp</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title">machine_info</span> {
+  if <span class="hljs-variable">$facts</span>[kernel] == <span class="hljs-string">"windows"</span> {
+       <span class="hljs-variable">$info_path</span> = <span class="hljs-string">"C:\Windows\Temp\Machine_Info.txt"</span>
+   } <span class="hljs-keyword">else</span> {
+       <span class="hljs-variable">$info_path</span> = <span class="hljs-string">"/tmp/machine_info.txt"</span>
+   }
+ <span class="hljs-keyword">file</span> { <span class="hljs-string">'machine_info'</span>:
+       <span class="hljs-attr">path</span> =&gt; <span class="hljs-variable">$info_path</span>,
+       <span class="hljs-attr">content</span> =&gt; template(<span class="hljs-string">'machine_info/info.erb'</span>),
+   }
+}</code></pre></div>
+<h2 id="puppet-templates">Puppet Templates</h2>
+<ul>
+<li><strong>Embedded Puppet (EPP)</strong> uses Puppet expressions in special tags. It's easy for any Puppet user to read, but only works with newer Puppet versions. (≥ 4.0, or late 3.x versions with future parser enabled.)</li>
+<li><strong>Embedded Ruby (ERB)</strong> uses Ruby code in tags. You need to know a small bit of Ruby to read it, but it works with all Puppet versions.</li>
+</ul>
+<blockquote>
+<p>cat templates/info.erb</p>
+</blockquote>
+<div><pre class="hljs"><code>Machine Information
+-------------------
+Disks: &lt;%= @disks %&gt;
+Memory: &lt;%= @memory %&gt;
+Processors: &lt;%= @processors %&gt;
+Network Interfaces: &lt;%= @interfaces %&gt;
+}</code></pre></div>
+<p>Run this in puppet agent</p>
+<blockquote>
+<p>sudo puppet agent -v --test</p>
+</blockquote>
+<p>Reboot machine</p>
+<p>sudo mkdir -p /etc/puppet/code/environments/production/modules/reboot/manifests</p>
+<p>cd /etc/puppet/code/environments/production/modules/reboot/manifests</p>
+<p>sudo touch init.pp</p>
+<p>sudo nano init.pp</p>
+<p>Ways to reboot each OS</p>
+<ul>
+<li><strong>shutdown /r</strong>  on windows</li>
+<li><strong>shutdown -r now</strong>  on Darwin (macOS)</li>
+<li><strong>reboot</strong>  on Linux.</li>
+</ul>
+<p>The complete <strong>reboot/manifests/init.pp</strong> should now look like this:</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title">reboot</span> {
+  if <span class="hljs-variable">$facts</span>[kernel] == <span class="hljs-string">"windows"</span> {
+    <span class="hljs-variable">$cmd</span> = <span class="hljs-string">"shutdown /r"</span>
+  } elsif <span class="hljs-variable">$facts</span>[kernel] == <span class="hljs-string">"Darwin"</span> {
+    <span class="hljs-variable">$cmd</span> = <span class="hljs-string">"shutdown -r now"</span>
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-variable">$cmd</span> = <span class="hljs-string">"reboot"</span>
+  }
+  <span class="hljs-keyword">if</span> $facts[uptime_days] &gt; 30 {
+    <span class="hljs-keyword">exec</span> { <span class="hljs-string">'reboot'</span>:
+      <span class="hljs-attr">command</span> =&gt; <span class="hljs-variable">$cmd</span>,
+     }
+   }
+}</code></pre></div>
+<p>So, edit <code>/etc/puppet/code/environments/production/manifests/site.pp</code> using the following command:</p>
+<div><pre class="hljs"><code>node <span class="hljs-keyword">default</span> {
+   <span class="hljs-class"><span class="hljs-keyword">class</span> </span>{ <span class="hljs-string">'packages'</span>: <span class="hljs-type"></span>}
+   <span class="hljs-class"><span class="hljs-keyword">class</span> </span>{ <span class="hljs-string">'machine_info'</span>: <span class="hljs-type"></span>}
+   <span class="hljs-class"><span class="hljs-keyword">class</span> </span>{ <span class="hljs-string">'reboot'</span>: <span class="hljs-type"></span>}
+}</code></pre></div>
+<p>Run the client on  <strong>linux-instance</strong>  VM terminal:</p>
+<div><pre class="hljs"><code>sudo puppet agent -v <span class="hljs-comment">--test</span></code></pre></div>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Puppet in Local]]></title>
+            <guid>bb508e1e046f425e8140433e8d2fbf51</guid>
+            <pubDate>Fri, 03 Nov 2023 02:03:15 GMT</pubDate>
+            <content:encoded><![CDATA[<blockquote>
+<p>sudo apt install puppet-master</p>
+</blockquote>
+<p>Manifest - ends with .pp</p>
+<div><pre class="hljs"><code>(base) mani@mani-lappy:~/puppet$ cat tools.pp
+<span class="hljs-keyword">package</span> { <span class="hljs-string">'htop'</span>:
+  <span class="hljs-attr">ensure</span> =&gt; <span class="hljs-literal">present</span>,
+}</code></pre></div>
+<blockquote>
+<p>sudo puppet apply -v tools.pp</p>
+</blockquote>
+<h2 id="resource-relationship">Resource Relationship</h2>
+<div><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title">ntp</span> {
+  <span class="hljs-keyword">package</span> { <span class="hljs-string">'ntp'</span>:
+    <span class="hljs-attr">ensure</span> =&gt; latest,
+  }
+  <span class="hljs-keyword">file</span> { <span class="hljs-string">'/etc/ntp.conf'</span>:
+    <span class="hljs-attr">source</span> =&gt; <span class="hljs-string">'/home/user/ntp.conf'</span>,
+    <span class="hljs-attr">replace</span> =&gt; <span class="hljs-keyword">true</span>,
+    <span class="hljs-attr">require</span> =&gt; Package[<span class="hljs-string">'ntp'</span>],
+    <span class="hljs-attr">notify</span> =&gt; Service[<span class="hljs-string">'ntp'</span>],
+  }
+  <span class="hljs-keyword">service</span> { <span class="hljs-string">'ntp'</span>:
+    <span class="hljs-attr">enable</span> =&gt; <span class="hljs-keyword">true</span>,
+    <span class="hljs-attr">ensure</span> =&gt; <span class="hljs-literal">running</span>,
+    <span class="hljs-attr">require</span> =&gt; File[<span class="hljs-string">'/etc/ntp.conf'</span>],
+ }
+}
+
+include ntp</code></pre></div>
+<h2 id="organizing-puppet-modules">Organizing Puppet Modules</h2>
+<p>A <em>module</em> is an easy way to organize our configuration management tools.</p>
+<p><img src="/_resources/f43815a8865348cdb861abd8d15745d6.png" /></p>
+<ul>
+<li>
+<p><ins class="jop-noMdConv"><a title="https://puppet.com/docs/puppet/latest/style_guide.html" href="https://puppet.com/docs/puppet/latest/style_guide.html">https://puppet.com/docs/puppet/latest/style_guide.html</a></ins></p>
+</li>
+<li>
+<p><ins class="jop-noMdConv"><a title="https://puppet.com/docs/puppetserver/latest/install_from_packages.html" href="https://puppet.com/docs/puppetserver/latest/install_from_packages.html">https://puppet.com/docs/puppetserver/latest/install_from_packages.html</a></ins></p>
+</li>
+</ul>
+<h2 id="puppet-nodes">Puppet Nodes</h2>
+<p>Different kinds of nodes are defined, allowing different sets of rule catalogs to apply to different types of machines.</p>
+<p>node definitions are stored in <strong>site.pp</strong></p>
+<p><strong>Deploying Puppet to Clients</strong></p>
+<ul>
+<li><ins class="jop-noMdConv"><a title="http://www.masterzen.fr/2010/11/14/puppet-ssl-explained/" href="http://www.masterzen.fr/2010/11/14/puppet-ssl-explained/">http://www.masterzen.fr/2010/11/14/puppet-ssl-explained/</a></ins></li>
+</ul>
+<p>puppet parser validate</p>
+<p>The puppet parser validate command checks the syntax of the manifest to make sure it's correct.</p>
+<ul>
+<li>
+<p><ins class="jop-noMdConv"><a title="https://rspec-puppet.com/tutorial/" href="https://rspec-puppet.com/tutorial/">https://rspec-puppet.com/tutorial/</a></ins></p>
+</li>
+<li>
+<p><ins class="jop-noMdConv"><a title="http://puppet-lint.com/" href="http://puppet-lint.com/">http://puppet-lint.com/</a></ins></p>
+</li>
+</ul>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Puppet]]></title>
+            <guid>741f2a9a9dab432da03b0623eca280e2</guid>
+            <pubDate>Thu, 02 Nov 2023 16:46:19 GMT</pubDate>
+            <content:encoded><![CDATA[<p>Puppet DSL (Domain Specific Language)</p>
+<div><pre class="hljs"><code>if <span class="hljs-variable">$facts</span>[<span class="hljs-string">'is_virtual'</span>] {
+  <span class="hljs-keyword">package</span> { <span class="hljs-string">'smartmontools'</span>:
+  	<span class="hljs-attr">ensure</span> =&gt; purged,
+  }
+} <span class="hljs-keyword">else</span> {
+  package { <span class="hljs-string">'smartmontools'</span>:
+  	<span class="hljs-attr">ensure</span> =&gt; installed,
+  }
+}</code></pre></div>
+<p> </p>
+<p>Common resources: packages, files and services</p>
+<p>fact - A fact is a hash that stores information about the details of a particular system.</p>
+<p> </p>
+<blockquote>
+<p>As <em><strong>idempotent</strong></em> action can be performed over and over again without changing the system after the first time the action was performed, and with no unintended side effects.</p>
+</blockquote>
+<p> </p>
+<p>Puppet scripts are idempotent, <em><strong>exec</strong></em> is an exception, it will modify the system each time</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">exec</span> { <span class="hljs-string">'move example file'</span>:
+  <span class="hljs-attr">command</span> =&gt; <span class="hljs-string">'mv /home/user/example.txt /home/user/Desktop'</span>,
+  <span class="hljs-attr">onlyif</span> =&gt; <span class="hljs-string">'test -e /home/user/example.txt'</span>,
+}</code></pre></div>
+<p>To make the <em><strong>exec</strong></em> commands to be idempotent, we can use the <em><strong>onlyif</strong></em></p>
+<p><em><strong>stateless</strong></em>  it's independent of other actions</p>
+<p> </p>
+<p> </p>
+<ul>
+<li>
+<p>You might remember that every file and directory on a Linux system is assigned permissions for three groups of people: the owner, the group and the others.. And for each group, the permissions refer to the possibility of reading, writing and executing the file.</p>
+</li>
+<li>
+<blockquote>
+<p>It's common to use numbers to represent the permissions: 4 for read, 2 for write and 1 for execute. The sum of the permissions given to each of the groups is then a part of the final number. For example, a permission of 6 means read and write, a permission of 5 means read and execute, and a permission of 7 means read, write and execute.</p>
+</blockquote>
+</li>
+<li>
+<p>In this example, we are using 4 numbers. The first one represents any special permissions that the file has (no special permissions). The second one is the permissions for the owner, (read and write), and then come the permissions for the group (read), and finally the permissions for the others (read and write)</p>
+</li>
+</ul>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Django quick-start]]></title>
+            <guid>06765c4d094b4ad0af1cc72ddd4249ae</guid>
+            <pubDate>Thu, 26 Oct 2023 23:50:40 GMT</pubDate>
+            <content:encoded><![CDATA[<h3 id="create-project">Create project:</h3>
+<p><code>django-admin startproject projectname</code></p>
+<h3 id="to-create-app-in-project">To create app in project:</h3>
+<p>goto projectname<br />
+<code>python manage.py startapp hello</code></p>
+<p>to run app:<br />
+<code>python manage.py runserver</code></p>
+<p>to store session:<br />
+<code>python manage.py migrate</code></p>
+<p>models:<br />
+<code>database classess</code></p>
+<p>settings: installed_apps</p>
+<h2 id="migrate-to-reflect-model-changes-in-app">migrate (to reflect model changes in app):</h2>
+<div><pre class="hljs"><code><span class="hljs-keyword">python</span> manage.<span class="hljs-keyword">py</span> makemigrations
+
+<span class="hljs-keyword">python</span> manage.<span class="hljs-keyword">py</span> sqlmigrate flights <span class="hljs-number">0001</span>
+
+<span class="hljs-keyword">python</span> manage.<span class="hljs-keyword">py</span> migrate</code></pre></div>
+<h3 id="to-run-shell">to run shell:</h3>
+<div><pre class="hljs"><code><span class="hljs-keyword">python</span> manage.<span class="hljs-keyword">py</span> <span class="hljs-keyword">shell</span>
+
+from flights.models import Flight</code></pre></div>
+<h3 id="access-all-data">access all data:</h3>
+<p><code>Flight.objects.all()</code></p>
+<p><strong>access first</strong>:<br />
+`f = Flight.objects.first()``</p>
+<p><strong>delete</strong>:<br />
+`f.delete()``</p>
+<p><strong>save:</strong><br />
+<code>f.save()</code></p>
+<p><strong>admin</strong><br />
+<code>python manage.py createsuperuser</code></p>
+<h3 id="creating-parameter-routes">creating parameter routes:</h3>
+<hr />
+<ol>
+<li>add path in urls.py</li>
+<li>create that function in views.py</li>
+<li>create that template in template folder</li>
+</ol>
+<p>link between pages:</p>
+<ol>
+<li>give urls a parameter name="index"<br />
+<code>&lt;a href="{% url 'flight' flight.id %}"&gt;bla bla&lt;/a&gt;</code></li>
+</ol>
+<p>organize html: (template inheritance)</p>
+<div><pre class="hljs"><code><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">extends</span></span> "base.html" %}</span><span class="language-xml">
+
+</span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">block</span></span> title %}</span><span class="language-xml"> </span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">endblock</span></span> %}</span><span class="language-xml">
+</span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">block</span></span> body %}</span><span class="language-xml"> </span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">endblock</span></span> %}</span></code></pre></div>
+<p>manyto many relationship models:</p>
+<p>models.ManyToManyField(Flight, blank=True, related_name="passengers")</p>
+<p>getting form data</p>
+<ol>
+<li>
+<p>get passenger id<br />
+<code>passenger_id = int(request.POST["passenger"])</code></p>
+</li>
+<li>
+<p>get passenger and flight by value (model.objects.get(pk=passenger_id))</p>
+</li>
+<li>
+<p>check for exception<br />
+KeyError and DoesNotExist</p>
+</li>
+<li>
+<p>add flight to passenger</p>
+</li>
+<li>
+<p>redirect:<br />
+<code>HttpResponseRedirect(reverse("flight", args=(flight_id, )))</code></p>
+</li>
+</ol>
+<p>imports</p>
+<p><code>HttpResponseRedirect from django.urls import reverse</code></p>
+<p>submit form</p>
+<p>add csrf token in form for security<br />
+<code>{% csrf_token %}</code></p>
+<p><strong>django forms:</strong></p>
+<ol>
+<li>
+<p>create forms.py</p>
+</li>
+<li>
+<p>import<br />
+from django.forms import ModelForm<br />
+from .models import Blog</p>
+</li>
+<li>
+<p>create class<br />
+class BlogForm(ModelForm):<br />
+class Meta:<br />
+model = Blog<br />
+fields = '<strong>all</strong>'</p>
+</li>
+<li>
+<p>throw form to views (in views.py)<br />
+import .forms import BlogForm<br />
+def index(request):<br />
+form = BlogForm()<br />
+context = { 'form': BlogForm}<br />
+return render(request, 'app/index.html', context)</p>
+</li>
+<li>
+<p>add it in template<br />
+{{ form }}</p>
+</li>
+</ol>
+<p>tags:<br />
+[[django]] [[python]] [[django]]</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Django roadmap]]></title>
+            <guid>91900cb196b84e03891f87fd2f9dfe35</guid>
+            <pubDate>Thu, 26 Oct 2023 23:50:40 GMT</pubDate>
+            <content:encoded><![CDATA[<h1 id="django-roadmap">Django roadmap</h1>
+<ul>
+<li class="md-checkbox joplin-checkbox"><div class="checkbox-wrapper"><input type="checkbox" id="md-checkbox-16" /><label id="cb-label-md-checkbox-16" for="md-checkbox-16" class="checkbox-label-unchecked"> Implement CRUD operations -- Build To-do list / Blog</label></div></li>
+<li class="md-checkbox joplin-checkbox"><div class="checkbox-wrapper"><input type="checkbox" id="md-checkbox-17" /><label id="cb-label-md-checkbox-17" for="md-checkbox-17" class="checkbox-label-unchecked"> Authentication with email - verification ( Can also add mobile verification with OTP)</label></div></li>
+<li class="md-checkbox joplin-checkbox"><div class="checkbox-wrapper"><input type="checkbox" id="md-checkbox-18" /><label id="cb-label-md-checkbox-18" for="md-checkbox-18" class="checkbox-label-unchecked"> Learn and implement JWT and session authentication.</label></div></li>
+<li class="md-checkbox joplin-checkbox"><div class="checkbox-wrapper"><input type="checkbox" id="md-checkbox-19" /><label id="cb-label-md-checkbox-19" for="md-checkbox-19" class="checkbox-label-unchecked"> Payment Gateway Integration</label></div></li>
+<li class="md-checkbox joplin-checkbox"><div class="checkbox-wrapper"><input type="checkbox" id="md-checkbox-20" /><label id="cb-label-md-checkbox-20" for="md-checkbox-20" class="checkbox-label-unchecked"> Web Scrapping</label></div></li>
+<li class="md-checkbox joplin-checkbox"><div class="checkbox-wrapper"><input type="checkbox" id="md-checkbox-21" /><label id="cb-label-md-checkbox-21" for="md-checkbox-21" class="checkbox-label-unchecked"> Integrate Celery with Django</label></div></li>
+<li class="md-checkbox joplin-checkbox"><div class="checkbox-wrapper"><input type="checkbox" id="md-checkbox-22" /><label id="cb-label-md-checkbox-22" for="md-checkbox-22" class="checkbox-label-unchecked"> Implement WebSockets using channels</label></div></li>
+<li class="md-checkbox joplin-checkbox"><div class="checkbox-wrapper"><input type="checkbox" id="md-checkbox-23" /><label id="cb-label-md-checkbox-23" for="md-checkbox-23" class="checkbox-label-unchecked"> Integrate all of the above into one project.</label></div></li>
+</ul>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Django Cheatsheet]]></title>
+            <guid>8d505a6e5f2640ccb7c5bf66b9c957b7</guid>
+            <pubDate>Thu, 26 Oct 2023 23:50:40 GMT</pubDate>
+            <content:encoded><![CDATA[<ol>
+<li>
+<p>Install Django:</p>
+<p>Copy code</p>
+<p><code>pip install django</code></p>
+</li>
+<li>
+<p>Create a Django project:</p>
+<p>Copy code</p>
+<p><code>django-admin startproject project_name</code></p>
+</li>
+<li>
+<p>Create a Django app:</p>
+<p>Copy code</p>
+<p><code>python manage.py startapp app_name</code></p>
+</li>
+<li>
+<p>Run the development server:</p>
+<p>Copy code</p>
+<p><code>python manage.py runserver</code></p>
+</li>
+<li>
+<p>Database migrations:</p>
+<p>Copy code</p>
+<p><code>python manage.py makemigrations python manage.py migrate</code></p>
+</li>
+<li>
+<p>Create a Django model:</p>
+<p>pythonCopy code</p>
+<div><pre class="hljs"><code><span class="hljs-title">from</span> django.db <span class="hljs-keyword">import</span> models
+<span class="hljs-class">
+<span class="hljs-keyword">class</span> <span class="hljs-type">ModelName</span>(<span class="hljs-title">models</span>.<span class="hljs-type">Model</span>):     
+    field_name = models.<span class="hljs-type">FieldType</span>(<span class="hljs-title">options</span>)</span></code></pre></div>
+</li>
+<li>
+<p>Register a model with Django admin:</p>
+<p>pythonCopy code</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> <span class="hljs-keyword">admin</span> 
+<span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> ModelName  
+
+<span class="hljs-keyword">admin</span>.site.register(ModelName)</code></pre></div>
+</li>
+<li>
+<p>Create a Django view:</p>
+<p>pythonCopy code</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">from</span> django.http <span class="hljs-keyword">import</span> HttpResponse
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">view_name</span>(<span class="hljs-params">request</span>):
+    <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">"Hello, World!"</span>)</code></pre></div>
+</li>
+<li>
+<p>Create a URL pattern:</p>
+<p>pythonCopy code</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> <span class="hljs-type">path</span> <span class="hljs-keyword">from</span> . <span class="hljs-keyword">import</span> views  
+urlpatterns = [ path(<span class="hljs-string">'url_path/'</span>, views.view_name, <span class="hljs-type">name</span>=<span class="hljs-string">'url_name'</span>), ]</code></pre></div>
+</li>
+<li>
+<p>Render a Django template:</p>
+</li>
+</ol>
+<div><pre class="hljs"><code><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">view_name</span>(<span class="hljs-params">request</span>):
+        <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">'template_name.html'</span>, context)</code></pre></div>
+<ol start="11">
+<li>Use Django template tags and filters:</li>
+</ol>
+<pre><code>cssCopy code
+
+`{% tag %} {{ variable|filter }}`
+</code></pre>
+<ol start="12">
+<li>Create a Django form:</li>
+</ol>
+<div><pre class="hljs"><code><span class="hljs-keyword">from</span> django <span class="hljs-keyword">import</span> forms <span class="hljs-keyword">from</span> .models
+<span class="hljs-keyword">import</span> ModelName  
+<span class="hljs-keyword">class</span> FormName(forms.ModelForm):
+    <span class="hljs-keyword">class</span> Meta:
+        model = ModelName
+        fields = [<span class="hljs-string">'field1'</span>, <span class="hljs-string">'field2'</span>]</code></pre></div>
+<ol start="13">
+<li>Use Django forms in templates:</li>
+</ol>
+<div><pre class="hljs"><code><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"post"</span>&gt;</span>     </span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">csrf_token</span></span> %}</span><span class="language-xml">     </span><span class="hljs-template-variable">{{ form.as_p }}</span><span class="language-xml">     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span></code></pre></div>
+<ol start="14">
+<li>Django authentication views and URLs:</li>
+</ol>
+<div><pre class="hljs"><code>django<span class="hljs-selector-class">.contrib</span><span class="hljs-selector-class">.auth</span><span class="hljs-selector-class">.views</span><span class="hljs-selector-class">.LoginView</span>
+django<span class="hljs-selector-class">.contrib</span><span class="hljs-selector-class">.auth</span><span class="hljs-selector-class">.views</span><span class="hljs-selector-class">.LogoutView</span>  
+django<span class="hljs-selector-class">.contrib</span><span class="hljs-selector-class">.auth</span><span class="hljs-selector-class">.views</span><span class="hljs-selector-class">.PasswordChangeView</span>
+django<span class="hljs-selector-class">.contrib</span><span class="hljs-selector-class">.auth</span><span class="hljs-selector-class">.views</span>.PasswordResetView</code></pre></div>
+]]></content:encoded>
+        </item>
+    </channel>
+</rss>

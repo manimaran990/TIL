@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Kafka Event Streaming Platform - Today I Learned</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Kafka Event Streaming Platform</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1698364240000"
+                  >2023-10-26 19:50</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1700238357839"
+                  >2023-11-17 11:25</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">python</span>
+              
+              <span class="keyword">streaming</span>
+              
+              <span class="keyword">kafka</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h2 id="event-management">Event management</h2>
+<p>Event Source -&gt; Event Streaming -&gt; Event Destination</p>
+<p>Event source: sensors, devices, databases, applications<br />
+Event Dest: File systems, databases, applications</p>
+<h2 id="esp-event-streaming-platform">ESP: Event Streaming Platform</h2>
+<ul>
+<li>An event stream represents entities status updates over time.</li>
+<li>Common event format include primitive data types, key-value and kv with timestamp</li>
+<li>ESP is needed especially when there are multiple event sources and destinations</li>
+<li>The main components of ESP are
+<ul>
+<li>Event broker</li>
+<li>Event storage</li>
+<li>Anlytic and Query Engine</li>
+</ul>
+</li>
+<li>Apache kafka is the most popular ESP</li>
+<li>Popular ESP service providers are Concluent Cloud, IBM Event stream, Amazon kinesis</li>
+</ul>
+<h2 id="apache-kafka">[[Apache]] [[Kafka]]</h2>
+<ul>
+<li>Popular open-source ESP</li>
+<li>Common usescases: user-activity, tracking, metrics, logs integration, financial transactional processing.</li>
+<li>Scalable and reliable</li>
+<li>service providers confluent cloud, ibm strean, amazon msk</li>
+</ul>
+<h2 id="build-event-streaming-pipelines">Build Event Streaming Pipelines</h2>
+<ul>
+<li>Core components of Kafka
+<ul>
+<li>Brokers: The dedicated servers to receive, store, process and distribute events.</li>
+<li>Topics: The containers or databases of events</li>
+<li>Partitions: Divide topics into different brokers</li>
+<li>Replications: Duplicate partitions into different brokers</li>
+<li>Producers: Kafka event applications to publish events into topics</li>
+<li>Consumers: Kafka client applications are subscribed to topics and read events from them</li>
+<li>The Kafka-topics CLI manages topics</li>
+<li>The Kafka-console-producer CLI manages producers</li>
+<li>The Kafka-console-consumer manages consumers</li>
+</ul>
+</li>
+</ul>
+<h2 id="kafka-streaming-process">Kafka streaming Process</h2>
+<ul>
+<li>Kafka Streams API is a simple client library supporting you with data processing in event streaming pipelines</li>
+<li>A stream processor receives, transforms and forwards the processed stream</li>
+<li>Kafka Streams API uses a computational graph</li>
+<li>There are two special types of processors in the topology: The source processor and the sink processor</li>
+</ul>
+<h2 id="kafka-practice">Kafka Practice</h2>
+<p>Download: wget <a title="https://archive.apache.org/dist/kafka/2.8.0/kafka_2.12-2.8.0.tgz" href="https://archive.apache.org/dist/kafka/2.8.0/kafka_2.12-2.8.0.tgz">https://archive.apache.org/dist/kafka/2.8.0/kafka_2.12-2.8.0.tgz</a></p>
+<h3 id="start-zookeper">start Zookeper</h3>
+<p>cd kafka_2.12-2.8.0<br />
+<code>bin/zookeeper-server-start.sh config/zookeeper.properties</code></p>
+<h3 id="start-kafka-broker-service">start kafka broker service</h3>
+<p>cd kafka_2.12-2.8.0<br />
+<code>bin/kafka-server-start.sh config/server.properties</code></p>
+<h3 id="create-a-topic">Create a topic</h3>
+<p>cd kafka_2.12-2.8.0<br />
+<code>bin/kafka-topics.sh --create --topic news --bootstrap-server localhost:9092</code></p>
+<h3 id="start-producer">start producer</h3>
+<p>cd kafka_2.12-2.8.0<br />
+<code>bin/kafka-console-producer.sh --topic news1 --bootstrap-server localhost:9092</code></p>
+<h2 id="start-consumer">start consumer</h2>
+<p><code>bin/kafka-console-consumer.sh --topic news1 --bootstrap-server localhost:9092 --from-beginning</code></p>
+<h2 id="list-topics">list topics</h2>
+<p><code>bin/kafka-topics.sh --bootstrap-server localhost:9092 --list</code></p>
+<h2 id="delete-topic">delete topic</h2>
+<p><code>bin/kafka-topics.sh --delete --topic news --bootstrap-server localhost:9092</code></p>
+<h2 id="create-with-2-partitions">create with 2 partitions</h2>
+<p><code>bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic bankbranch --partitions 2</code></p>
+<h2 id="describe-topic">describe topic</h2>
+<p><code>bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic bankbranch</code></p>
+<h2 id="produce-and-consume-with-message-keys">Produce and consume with message keys</h2>
+<p><code>bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic bankbranch --property parse.key=true --property key.separator=:</code></p>
+<div><pre class="hljs"><code>&gt;<span class="hljs-number">1</span>:{<span class="hljs-string">"atmid"</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"transid"</span>: <span class="hljs-number">102</span>}
+&gt;<span class="hljs-number">1</span>:{<span class="hljs-string">"atmid"</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"transid"</span>: <span class="hljs-number">103</span>}
+&gt;<span class="hljs-number">2</span>:{<span class="hljs-string">"atmid"</span>: <span class="hljs-number">2</span>, <span class="hljs-string">"transid"</span>: <span class="hljs-number">202</span>}
+&gt;<span class="hljs-number">2</span>:{<span class="hljs-string">"atmid"</span>: <span class="hljs-number">2</span>, <span class="hljs-string">"transid"</span>: <span class="hljs-number">203</span>}
+&gt;<span class="hljs-number">1</span>:{<span class="hljs-string">"atmid"</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"transid"</span>: <span class="hljs-number">104</span>}</code></pre></div>
+<p><code>bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic bankbranch --from-beginning --property print.key=true --property key.separator=:</code></p>
+<div><pre class="hljs"><code><span class="hljs-attribute">1</span>:{<span class="hljs-string">"atmid"</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"transid"</span>: <span class="hljs-number">102</span>}
+<span class="hljs-attribute">1</span>:{<span class="hljs-string">"atmid"</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"transid"</span>: <span class="hljs-number">103</span>}
+<span class="hljs-attribute">1</span>:{<span class="hljs-string">"atmid"</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"transid"</span>: <span class="hljs-number">104</span>}
+<span class="hljs-attribute">2</span>:{<span class="hljs-string">"atmid"</span>: <span class="hljs-number">2</span>, <span class="hljs-string">"transid"</span>: <span class="hljs-number">202</span>}
+<span class="hljs-attribute">2</span>:{<span class="hljs-string">"atmid"</span>: <span class="hljs-number">2</span>, <span class="hljs-string">"transid"</span>: <span class="hljs-number">203</span>}</code></pre></div>
+<h2 id="consumer-group">Consumer Group</h2>
+<p>`bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic bankbranch --group atm-app</p>
+<p><code>bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group atm-app</code></p>
+<h2 id="reset-offset">Reset offset</h2>
+<p><code>bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --topic bankbranch --group atm-app --reset-offsets --to-earliest --execute</code></p>
+<p>GROUP TOPIC PARTITION NEW-OFFSET<br />
+atm-app bankbranch 0 0<br />
+atm-app bankbranch 1 0<br />
+theia@theiadocker-manimaran990:/home/project/kafka_2.12-2.8.0$</p>
+<h2 id="reset-offset-to-any-number">Reset offset to any number</h2>
+<p>bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --topic bankbranch --group atm-app --reset-offsets --shift-by -2 --execute</p>
+<p>GROUP TOPIC PARTITION NEW-OFFSET<br />
+atm-app bankbranch 0 5<br />
+atm-app bankbranch 1 5</p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

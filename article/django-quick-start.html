@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Django quick-start - Today I Learned</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Django quick-start</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1698364240000"
+                  >2023-10-26 19:50</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1698680762656"
+                  >2023-10-30 11:46</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">python</span>
+              
+              <span class="keyword">django</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h3 id="create-project">Create project:</h3>
+<p><code>django-admin startproject projectname</code></p>
+<h3 id="to-create-app-in-project">To create app in project:</h3>
+<p>goto projectname<br />
+<code>python manage.py startapp hello</code></p>
+<p>to run app:<br />
+<code>python manage.py runserver</code></p>
+<p>to store session:<br />
+<code>python manage.py migrate</code></p>
+<p>models:<br />
+<code>database classess</code></p>
+<p>settings: installed_apps</p>
+<h2 id="migrate-to-reflect-model-changes-in-app">migrate (to reflect model changes in app):</h2>
+<div><pre class="hljs"><code><span class="hljs-keyword">python</span> manage.<span class="hljs-keyword">py</span> makemigrations
+
+<span class="hljs-keyword">python</span> manage.<span class="hljs-keyword">py</span> sqlmigrate flights <span class="hljs-number">0001</span>
+
+<span class="hljs-keyword">python</span> manage.<span class="hljs-keyword">py</span> migrate</code></pre></div>
+<h3 id="to-run-shell">to run shell:</h3>
+<div><pre class="hljs"><code><span class="hljs-keyword">python</span> manage.<span class="hljs-keyword">py</span> <span class="hljs-keyword">shell</span>
+
+from flights.models import Flight</code></pre></div>
+<h3 id="access-all-data">access all data:</h3>
+<p><code>Flight.objects.all()</code></p>
+<p><strong>access first</strong>:<br />
+`f = Flight.objects.first()``</p>
+<p><strong>delete</strong>:<br />
+`f.delete()``</p>
+<p><strong>save:</strong><br />
+<code>f.save()</code></p>
+<p><strong>admin</strong><br />
+<code>python manage.py createsuperuser</code></p>
+<h3 id="creating-parameter-routes">creating parameter routes:</h3>
+<hr />
+<ol>
+<li>add path in urls.py</li>
+<li>create that function in views.py</li>
+<li>create that template in template folder</li>
+</ol>
+<p>link between pages:</p>
+<ol>
+<li>give urls a parameter name="index"<br />
+<code>&lt;a href="{% url 'flight' flight.id %}"&gt;bla bla&lt;/a&gt;</code></li>
+</ol>
+<p>organize html: (template inheritance)</p>
+<div><pre class="hljs"><code><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">extends</span></span> "base.html" %}</span><span class="language-xml">
+
+</span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">block</span></span> title %}</span><span class="language-xml"> </span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">endblock</span></span> %}</span><span class="language-xml">
+</span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">block</span></span> body %}</span><span class="language-xml"> </span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">endblock</span></span> %}</span></code></pre></div>
+<p>manyto many relationship models:</p>
+<p>models.ManyToManyField(Flight, blank=True, related_name="passengers")</p>
+<p>getting form data</p>
+<ol>
+<li>
+<p>get passenger id<br />
+<code>passenger_id = int(request.POST["passenger"])</code></p>
+</li>
+<li>
+<p>get passenger and flight by value (model.objects.get(pk=passenger_id))</p>
+</li>
+<li>
+<p>check for exception<br />
+KeyError and DoesNotExist</p>
+</li>
+<li>
+<p>add flight to passenger</p>
+</li>
+<li>
+<p>redirect:<br />
+<code>HttpResponseRedirect(reverse("flight", args=(flight_id, )))</code></p>
+</li>
+</ol>
+<p>imports</p>
+<p><code>HttpResponseRedirect from django.urls import reverse</code></p>
+<p>submit form</p>
+<p>add csrf token in form for security<br />
+<code>{% csrf_token %}</code></p>
+<p><strong>django forms:</strong></p>
+<ol>
+<li>
+<p>create forms.py</p>
+</li>
+<li>
+<p>import<br />
+from django.forms import ModelForm<br />
+from .models import Blog</p>
+</li>
+<li>
+<p>create class<br />
+class BlogForm(ModelForm):<br />
+class Meta:<br />
+model = Blog<br />
+fields = '<strong>all</strong>'</p>
+</li>
+<li>
+<p>throw form to views (in views.py)<br />
+import .forms import BlogForm<br />
+def index(request):<br />
+form = BlogForm()<br />
+context = { 'form': BlogForm}<br />
+return render(request, 'app/index.html', context)</p>
+</li>
+<li>
+<p>add it in template<br />
+{{ form }}</p>
+</li>
+</ol>
+<p>tags:<br />
+[[django]] [[python]] [[django]]</p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

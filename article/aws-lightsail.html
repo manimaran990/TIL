@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>AWS Lightsail - Today I Learned</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">AWS Lightsail</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1700269743508"
+                  >2023-11-17 20:09</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1700535734094"
+                  >2023-11-20 22:02</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">aws</span>
+              
+              <span class="keyword">lightsail</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h2 id="lightsail">Lightsail</h2>
+<ul>
+<li>Quickly spinup linux servers</li>
+<li>low cost</li>
+<li>Per month plan</li>
+<li>No security groups</li>
+<li>Dynamic IP will be provided on each start</li>
+</ul>
+<h2 id="getting-started">Getting started</h2>
+<ul>
+<li>Console &gt; search Lightsail</li>
+<li>Comes with OS or Bundled with APP</li>
+<li>Create new SSH key pair</li>
+<li>Choose plan and create instance</li>
+</ul>
+<p><code>ssh -i mykey.pem ubuntu@publicip</code></p>
+<h2 id="static-ip">Static IP</h2>
+<p>Network &gt; Create a static IP<br />
+Those static IPs should be attached to instance</p>
+<h1 id="attach-ebs-to-lightsail-instance">Attach EBS to Lightsail instance</h1>
+<ul>
+<li>Create Lightsail Instance</li>
+<li>Click Storage - Create disk</li>
+<li>Create a disk</li>
+<li>Attach disk to active instance</li>
+<li>format and mount the file system via shell</li>
+<li>add an entry in /etc/fstab to mount it on system startup</li>
+</ul>
+<h2 id="to-delete-volumne">To delete volumne</h2>
+<ul>
+<li>Stop the instance</li>
+<li>detach the volumne</li>
+<li>delete the volumne</li>
+</ul>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

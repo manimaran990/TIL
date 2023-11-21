@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Puppet Deployment - Today I Learned</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Puppet Deployment</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1699121721644"
+                  >2023-11-04 14:15</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1699122183786"
+                  >2023-11-04 14:23</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">deployment</span>
+              
+              <span class="keyword">puppet</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h2 id="install-packages">Install Packages</h2>
+<blockquote>
+<p>cd /etc/puppet/code/environments/production/modules/packages</p>
+<p>cat manifests/init.pp</p>
+</blockquote>
+<div><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title">packages</span> {
+    <span class="hljs-keyword">package</span> { <span class="hljs-string">'python-requests'</span>:
+        <span class="hljs-attr">ensure</span> =&gt; installed,
+    }
+
+}</code></pre></div>
+<blockquote>
+<p>sudo chmod 646 manifests/init.pp</p>
+</blockquote>
+<div><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title">packages</span> {
+   <span class="hljs-keyword">package</span> { <span class="hljs-string">'python-requests'</span>:
+       <span class="hljs-attr">ensure</span> =&gt; installed,
+   }
+   <span class="hljs-keyword">if</span> $facts[os][family] == <span class="hljs-string">"Debian"</span> {
+     <span class="hljs-keyword">package</span> { <span class="hljs-string">'golang'</span>:
+       <span class="hljs-attr">ensure</span> =&gt; installed,
+     }
+  }
+   if <span class="hljs-variable">$facts</span>[os][family] == <span class="hljs-string">"RedHat"</span> {
+     <span class="hljs-keyword">package</span> { <span class="hljs-string">'nodejs'</span>:
+       <span class="hljs-attr">ensure</span> =&gt; installed,
+     }
+  }
+}</code></pre></div>
+<blockquote>
+<p>sudo puppet agent -v --test</p>
+</blockquote>
+<p>Fetch machine information</p>
+<p>cat manifests/init.pp</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title">machine_info</span> {
+  if <span class="hljs-variable">$facts</span>[kernel] == <span class="hljs-string">"windows"</span> {
+       <span class="hljs-variable">$info_path</span> = <span class="hljs-string">"C:\Windows\Temp\Machine_Info.txt"</span>
+   } <span class="hljs-keyword">else</span> {
+       <span class="hljs-variable">$info_path</span> = <span class="hljs-string">"/tmp/machine_info.txt"</span>
+   }
+ <span class="hljs-keyword">file</span> { <span class="hljs-string">'machine_info'</span>:
+       <span class="hljs-attr">path</span> =&gt; <span class="hljs-variable">$info_path</span>,
+       <span class="hljs-attr">content</span> =&gt; template(<span class="hljs-string">'machine_info/info.erb'</span>),
+   }
+}</code></pre></div>
+<h2 id="puppet-templates">Puppet Templates</h2>
+<ul>
+<li><strong>Embedded Puppet (EPP)</strong> uses Puppet expressions in special tags. It's easy for any Puppet user to read, but only works with newer Puppet versions. (≥ 4.0, or late 3.x versions with future parser enabled.)</li>
+<li><strong>Embedded Ruby (ERB)</strong> uses Ruby code in tags. You need to know a small bit of Ruby to read it, but it works with all Puppet versions.</li>
+</ul>
+<blockquote>
+<p>cat templates/info.erb</p>
+</blockquote>
+<div><pre class="hljs"><code>Machine Information
+-------------------
+Disks: &lt;%= @disks %&gt;
+Memory: &lt;%= @memory %&gt;
+Processors: &lt;%= @processors %&gt;
+Network Interfaces: &lt;%= @interfaces %&gt;
+}</code></pre></div>
+<p>Run this in puppet agent</p>
+<blockquote>
+<p>sudo puppet agent -v --test</p>
+</blockquote>
+<p>Reboot machine</p>
+<p>sudo mkdir -p /etc/puppet/code/environments/production/modules/reboot/manifests</p>
+<p>cd /etc/puppet/code/environments/production/modules/reboot/manifests</p>
+<p>sudo touch init.pp</p>
+<p>sudo nano init.pp</p>
+<p>Ways to reboot each OS</p>
+<ul>
+<li><strong>shutdown /r</strong>  on windows</li>
+<li><strong>shutdown -r now</strong>  on Darwin (macOS)</li>
+<li><strong>reboot</strong>  on Linux.</li>
+</ul>
+<p>The complete <strong>reboot/manifests/init.pp</strong> should now look like this:</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title">reboot</span> {
+  if <span class="hljs-variable">$facts</span>[kernel] == <span class="hljs-string">"windows"</span> {
+    <span class="hljs-variable">$cmd</span> = <span class="hljs-string">"shutdown /r"</span>
+  } elsif <span class="hljs-variable">$facts</span>[kernel] == <span class="hljs-string">"Darwin"</span> {
+    <span class="hljs-variable">$cmd</span> = <span class="hljs-string">"shutdown -r now"</span>
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-variable">$cmd</span> = <span class="hljs-string">"reboot"</span>
+  }
+  <span class="hljs-keyword">if</span> $facts[uptime_days] &gt; 30 {
+    <span class="hljs-keyword">exec</span> { <span class="hljs-string">'reboot'</span>:
+      <span class="hljs-attr">command</span> =&gt; <span class="hljs-variable">$cmd</span>,
+     }
+   }
+}</code></pre></div>
+<p>So, edit <code>/etc/puppet/code/environments/production/manifests/site.pp</code> using the following command:</p>
+<div><pre class="hljs"><code>node <span class="hljs-keyword">default</span> {
+   <span class="hljs-class"><span class="hljs-keyword">class</span> </span>{ <span class="hljs-string">'packages'</span>: <span class="hljs-type"></span>}
+   <span class="hljs-class"><span class="hljs-keyword">class</span> </span>{ <span class="hljs-string">'machine_info'</span>: <span class="hljs-type"></span>}
+   <span class="hljs-class"><span class="hljs-keyword">class</span> </span>{ <span class="hljs-string">'reboot'</span>: <span class="hljs-type"></span>}
+}</code></pre></div>
+<p>Run the client on  <strong>linux-instance</strong>  VM terminal:</p>
+<div><pre class="hljs"><code>sudo puppet agent -v <span class="hljs-comment">--test</span></code></pre></div>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

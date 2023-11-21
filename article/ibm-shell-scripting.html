@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>IBM Shell scripting - Today I Learned</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">IBM Shell scripting</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1698364240000"
+                  >2023-10-26 19:50</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1700238445838"
+                  >2023-11-17 11:27</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">shell</span>
+              
+              <span class="keyword">scripting</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h2 id="shell-variables">shell variables</h2>
+<p><strong>set</strong> - change shell variable, environemnt parameter<br />
+<strong>env</strong> -  view all environment variables</p>
+<p><strong>pipe</strong> - | give output as input to another command</p>
+<p><strong>tr</strong>   translate</p>
+<p>echo "Linux and shell scripting are awesome!" | tr "aeiou" "_"<br />
+L_n_x _nd sh_ll scr_pt_ng <em>r</em> <em>w_s_m</em>!</p>
+<p>cat pets.txt | tr "[a-z]" "[A-Z]"</p>
+<h2 id="metacharacters">Metacharacters</h2>
+<p># - precedes a comment<br />
+; - command separator<br />
+* - filename expansion wildcard<br />
+? - single character wildcard</p>
+<h2 id="quoting">Quoting</h2>
+<p>\ -&gt; escape char<br />
+" "  -&gt; interpret but evaluate metacharacters<br />
+' ' -&gt; interpret literally</p>
+<h2 id="io-redirection">I/O redirection:</h2>
+<p>&gt;  to output<br />
+&gt;&gt; append<br />
+\2&gt; redirect stderr to file<br />
+\2&gt;&gt; append stderr to file<br />
+&lt; redirect file content std inp</p>
+<h2 id="command-substitution">Command substitution:</h2>
+<p>$(command) or `command`</p>
+<h2 id="crontab-schedule-a-job">Crontab (schedule a job)</h2>
+<p>crontab -e #invokes crontab</p>
+<p>** syntax: **<br />
+m h  dom mon dow   command</p>
+<p>crontab -l #list all cron jobs<br />
+crontab -r #remove all jobs</p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

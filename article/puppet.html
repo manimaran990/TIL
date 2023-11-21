@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Puppet - Today I Learned</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Puppet</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1698943579033"
+                  >2023-11-02 12:46</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1698946659753"
+                  >2023-11-02 13:37</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>Puppet DSL (Domain Specific Language)</p>
+<div><pre class="hljs"><code>if <span class="hljs-variable">$facts</span>[<span class="hljs-string">'is_virtual'</span>] {
+  <span class="hljs-keyword">package</span> { <span class="hljs-string">'smartmontools'</span>:
+  	<span class="hljs-attr">ensure</span> =&gt; purged,
+  }
+} <span class="hljs-keyword">else</span> {
+  package { <span class="hljs-string">'smartmontools'</span>:
+  	<span class="hljs-attr">ensure</span> =&gt; installed,
+  }
+}</code></pre></div>
+<p> </p>
+<p>Common resources: packages, files and services</p>
+<p>fact - A fact is a hash that stores information about the details of a particular system.</p>
+<p> </p>
+<blockquote>
+<p>As <em><strong>idempotent</strong></em> action can be performed over and over again without changing the system after the first time the action was performed, and with no unintended side effects.</p>
+</blockquote>
+<p> </p>
+<p>Puppet scripts are idempotent, <em><strong>exec</strong></em> is an exception, it will modify the system each time</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">exec</span> { <span class="hljs-string">'move example file'</span>:
+  <span class="hljs-attr">command</span> =&gt; <span class="hljs-string">'mv /home/user/example.txt /home/user/Desktop'</span>,
+  <span class="hljs-attr">onlyif</span> =&gt; <span class="hljs-string">'test -e /home/user/example.txt'</span>,
+}</code></pre></div>
+<p>To make the <em><strong>exec</strong></em> commands to be idempotent, we can use the <em><strong>onlyif</strong></em></p>
+<p><em><strong>stateless</strong></em>  it's independent of other actions</p>
+<p> </p>
+<p> </p>
+<ul>
+<li>
+<p>You might remember that every file and directory on a Linux system is assigned permissions for three groups of people: the owner, the group and the others.. And for each group, the permissions refer to the possibility of reading, writing and executing the file.</p>
+</li>
+<li>
+<blockquote>
+<p>It's common to use numbers to represent the permissions: 4 for read, 2 for write and 1 for execute. The sum of the permissions given to each of the groups is then a part of the final number. For example, a permission of 6 means read and write, a permission of 5 means read and execute, and a permission of 7 means read, write and execute.</p>
+</blockquote>
+</li>
+<li>
+<p>In this example, we are using 4 numbers. The first one represents any special permissions that the file has (no special permissions). The second one is the permissions for the owner, (read and write), and then come the permissions for the group (read), and finally the permissions for the others (read and write)</p>
+</li>
+</ul>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

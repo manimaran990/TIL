@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Apache AirFlow - Today I Learned</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Apache AirFlow</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1698364240000"
+                  >2023-10-26 19:50</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1700238220403"
+                  >2023-11-17 11:23</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">apache</span>
+              
+              <span class="keyword">airflow</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h3 id="apache-airflow-overview">Apache Airflow overview</h3>
+<ul>
+<li>open source workflow orchestration tool</li>
+<li>build and run workflows</li>
+<li>workflow represented as DAG (Directed Acyclic Graphs)</li>
+<li>AirFlow not a streaming solution</li>
+</ul>
+<h3 id="architecture">Architecture</h3>
+<p><img src="https://airflow.apache.org/docs/apache-airflow/stable/_images/arch-diag-basic.png" alt="Image" /></p>
+<h3 id="dag-illustration">DAG illustration</h3>
+<ul>
+<li>specifies dependancy within tasks</li>
+<li>in order to execute them</li>
+</ul>
+<h3 id="airflow-task-state">Airflow task state</h3>
+<ul>
+<li>scheduled</li>
+<li>removed</li>
+<li>queued</li>
+<li>running</li>
+<li>success</li>
+<li>failed</li>
+<li>up for retry</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li>Pure [[python]]</li>
+<li>useful UI (get insights)</li>
+<li>Integration (plug and play)</li>
+<li>Easy to use (pipeline scope)</li>
+<li>Open source</li>
+</ul>
+<h3 id="principles">Principles</h3>
+<ul>
+<li>Scalable</li>
+<li>Dynamic</li>
+<li>Extensible</li>
+<li>Lean (explicit)</li>
+</ul>
+<h3 id="dag">DAG</h3>
+<ul>
+<li>Directed Acyclic Graph (each edge with direction)</li>
+<li>Acyclic - no loops (cycles)</li>
+<li>Nodes are tasks</li>
+<li>Edges are dependencies</li>
+<li>Defined as code in python also scheduled</li>
+</ul>
+<h2 id="tasks-and-operator">Tasks and Operator</h2>
+<ul>
+<li>Tasks are written in python</li>
+<li>Tasks implement operator, ex., python, sql and bash operators</li>
+<li>Operators determine what each task does</li>
+<li>Sensor operators poll for certain time or condition</li>
+<li>Other operators include email and http request operators</li>
+</ul>
+<h2 id="dag-definition-components">DAG definition components</h2>
+<ol>
+<li>Library imports</li>
+<li>DAG arguments</li>
+<li>DAG definition</li>
+<li>Task definitions</li>
+<li>Task pipeline</li>
+</ol>
+<h2 id="airflow-scheduler">Airflow Scheduler</h2>
+<ul>
+<li>Deploys on worker array</li>
+<li>follows your DAG</li>
+<li>first DAG run</li>
+<li>Subsequent runs</li>
+</ul>
+<h2 id="advantage-of-workflows-as-code">Advantage of workflows as code</h2>
+<ul>
+<li>Maintainable</li>
+<li>Versionable</li>
+<li>Collaborative</li>
+<li>Testable</li>
+</ul>
+<h2 id="dags-view">DAGs View</h2>
+<ul>
+<li>Rich UI that simplifies working with data pipelines</li>
+</ul>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

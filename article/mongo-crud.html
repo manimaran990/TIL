@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Mongo CRUD - Today I Learned</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Today I Learned</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Mongo CRUD</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1698364240000"
+                  >2023-10-26 19:50</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1698680892890"
+                  >2023-10-30 11:48</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">mongodb</span>
+              
+              <span class="keyword">crud</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><h3 id="mongo-shell">Mongo Shell</h3>
+<div><pre class="hljs"><code><span class="hljs-attribute">mongo</span> <span class="hljs-string">"mongodb://USER:PASSWORD<span class="hljs-variable">@uri</span>/test"</span></code></pre></div>
+<p>to use db:</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">use</span> databseDB</code></pre></div>
+<p>to create collection</p>
+<div><pre class="hljs"><code> db.create<span class="hljs-constructor">Collection(<span class="hljs-string">"languages"</span>)</span></code></pre></div>
+<h3 id="create">Create:</h3>
+<div><pre class="hljs"><code>db<span class="hljs-selector-class">.students</span><span class="hljs-selector-class">.insertOne</span>( {<span class="hljs-string">"firstname"</span>: <span class="hljs-string">"John"</span>...})</code></pre></div>
+<p>it will get acknowledged</p>
+<h2 id="create-many">Create many</h2>
+<div><pre class="hljs"><code>db.students.insert<span class="hljs-constructor">Many(<span class="hljs-params">list</span> <span class="hljs-params">of</span> <span class="hljs-params">documents</span>)</span></code></pre></div>
+<h3 id="read">Read</h3>
+<div><pre class="hljs"><code>db<span class="hljs-selector-class">.languages</span><span class="hljs-selector-class">.find</span>()<span class="hljs-selector-class">.limit</span>(<span class="hljs-number">3</span>)</code></pre></div>
+<div><pre class="hljs"><code>db<span class="hljs-selector-class">.student</span><span class="hljs-selector-class">.findOne</span>({<span class="hljs-string">"name"</span>: <span class="hljs-string">"john"</span>})</code></pre></div>
+<p>This command lists all the documents with only name field in the output.</p>
+<div><pre class="hljs"><code>db.languages.<span class="hljs-built_in">find</span>({},{<span class="hljs-string">"name"</span>:1})</code></pre></div>
+<p>This command lists all the documents without the name field in the output.</p>
+<div><pre class="hljs"><code>db.languages.<span class="hljs-built_in">find</span>({},{<span class="hljs-string">"name"</span>:0})</code></pre></div>
+<p>This command lists all the “object oriented” languages with only “name” field in the output.</p>
+<div><pre class="hljs"><code>db.languages.<span class="hljs-built_in">find</span>({<span class="hljs-string">"type"</span>:<span class="hljs-string">"object oriented"</span>},{<span class="hljs-string">"name"</span>:1})</code></pre></div>
+<h3 id="to-retrieve-all">To retrieve all</h3>
+<div><pre class="hljs"><code>students.<span class="hljs-built_in">find</span>({<span class="hljs-string">"lastName"</span>: <span class="hljs-string">"Doe"</span>})</code></pre></div>
+<p>get count:</p>
+<div><pre class="hljs"><code>students.<span class="hljs-built_in">count</span>({<span class="hljs-string">"lastName"</span>: <span class="hljs-string">"Doe"</span>})</code></pre></div>
+<h3 id="replace">Replace</h3>
+<div><pre class="hljs"><code>db<span class="hljs-selector-class">.student</span><span class="hljs-selector-attr">[<span class="hljs-string">'email'</span>]</span> = <span class="hljs-string">"john@gmail.com"</span></code></pre></div>
+<p>to replace one doc:</p>
+<div><pre class="hljs"><code>db.students.replace<span class="hljs-constructor">One({<span class="hljs-string">"lastName"</span>: <span class="hljs-string">"Doe"</span>}, <span class="hljs-params">student</span>)</span></code></pre></div>
+<h3 id="update">Update</h3>
+<div><pre class="hljs"><code>The ‘updateMany’ command is used <span class="hljs-keyword">to</span> update documents <span class="hljs-keyword">in</span> a mongodb collection, <span class="hljs-keyword">and</span> it has the following generic syntax.
+
+db.collection.update<span class="hljs-constructor">Many({<span class="hljs-params">what</span> <span class="hljs-params">documents</span> <span class="hljs-params">to</span> <span class="hljs-params">find</span>},{$<span class="hljs-params">set</span>:{<span class="hljs-params">what</span> <span class="hljs-params">fields</span> <span class="hljs-params">to</span> <span class="hljs-params">set</span>}})</span>
+
+
+Here we are adding a field **description** <span class="hljs-keyword">with</span> value **programming language** <span class="hljs-keyword">to</span> all the documents.
+
+db.languages.update<span class="hljs-constructor">Many({},{$<span class="hljs-params">dset</span>:{<span class="hljs-string">"description"</span>:<span class="hljs-string">"programming language"</span>}})</span>
+
+
+Set the creater <span class="hljs-keyword">for</span> python language.
+
+db.languages.update<span class="hljs-constructor">Many({<span class="hljs-string">"name"</span>:<span class="hljs-string">"python"</span>},{$<span class="hljs-params">set</span>:{<span class="hljs-string">"creator"</span>:<span class="hljs-string">"Guido van Rossum"</span>}})</span>
+
+
+
+Set a field named **compiled** <span class="hljs-keyword">with</span> a value **<span class="hljs-literal">true</span>** <span class="hljs-keyword">for</span> all the **<span class="hljs-keyword">object</span> oriented** languages.
+
+db.languages.update<span class="hljs-constructor">Many({<span class="hljs-string">"type"</span>:<span class="hljs-string">"object oriented"</span>},{$<span class="hljs-params">set</span>:{<span class="hljs-string">"compiled"</span>:<span class="hljs-params">true</span>}})</span></code></pre></div>
+<div><pre class="hljs"><code>
+changes = {<span class="hljs-string">"$set"</span>: {<span class="hljs-string">"onlineOnly"</span>: <span class="hljs-literal">true</span>, <span class="hljs-string">"email"</span>: <span class="hljs-string">"john@gmail.com"</span>}}
+
+db.students.update<span class="hljs-constructor">One({<span class="hljs-string">"lastName"</span>: <span class="hljs-string">"Doe"</span>}, <span class="hljs-params">changes</span>)</span>
+
+db.students.update<span class="hljs-constructor">Many({}, {<span class="hljs-string">"$set"</span>: {<span class="hljs-string">"onlineOnly"</span>: <span class="hljs-params">true</span>}})</span></code></pre></div>
+<h3 id="delete">Delete</h3>
+<div><pre class="hljs"><code>db<span class="hljs-selector-class">.students</span><span class="hljs-selector-class">.deleteOne</span>({<span class="hljs-string">"studentId"</span>: <span class="hljs-string">"1"</span>})
+
+db<span class="hljs-selector-class">.students</span><span class="hljs-selector-class">.deleteMany</span>({<span class="hljs-string">"graduateYear"</span>: <span class="hljs-number">2019</span>})</code></pre></div>
+<p>Delete the <strong>scala</strong> language document.</p>
+<div><pre class="hljs"><code>db.languages.<span class="hljs-built_in">remove</span>({<span class="hljs-string">"name"</span>:<span class="hljs-string">"scala"</span>})</code></pre></div>
+<p>Delete the <strong>object oriented</strong> languages.</p>
+<div><pre class="hljs"><code>db.languages.<span class="hljs-built_in">remove</span>({<span class="hljs-string">"type"</span>:<span class="hljs-string">"object oriented"</span>})</code></pre></div>
+<p>Delete all the documents in a collection.</p>
+<div><pre class="hljs"><code>db.languages.<span class="hljs-built_in">remove</span>({})</code></pre></div>
+<h3 id="indexes">Indexes</h3>
+<p>quickly find a document in a db</p>
+<div><pre class="hljs"><code><span class="hljs-attribute">db</span>.courseEnrollment.createIndex({<span class="hljs-string">"courseId"</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"studentID"</span>:<span class="hljs-number">1</span>})</code></pre></div>
+<p>it will create a balance tree with courseIDs and studentIDs in it, to effieciently search</p>
+<div><pre class="hljs"><code>&gt; db.bigdata.createIndex({<span class="hljs-string">"balance"</span>:<span class="hljs-number">1</span>})
+{
+        <span class="hljs-string">"createdCollectionAutomatically"</span> : <span class="hljs-type">false</span>,
+        <span class="hljs-string">"numIndexesBefore"</span> : 1,
+        <span class="hljs-string">"numIndexesAfter"</span> : 2,
+        <span class="hljs-string">"ok"</span> : 1
+}
+&gt; db.bigdata.find({<span class="hljs-string">"balance"</span>:<span class="hljs-number">10000</span>}).explain(<span class="hljs-string">"executionStats"</span>).executionStats.executionTimeMillis
+<span class="hljs-number">0</span>
+&gt; db.bigdata.getIndexes()
+[
+        {
+                <span class="hljs-string">"v"</span> : 2,
+                <span class="hljs-string">"key"</span> : {
+                        <span class="hljs-string">"_id"</span> : 1
+                },
+                <span class="hljs-string">"name"</span> : "_<span class="hljs-type">id</span>_<span class="hljs-string">",
+                "</span>ns<span class="hljs-string">" : "</span>training.bigdata<span class="hljs-string">"
+        },
+        {
+                "</span>v<span class="hljs-string">" : 2,
+                "</span>key<span class="hljs-string">" : {
+                        "</span>balance<span class="hljs-string">" : 1
+                },
+                "</span>name<span class="hljs-string">" : "</span>balance_1<span class="hljs-string">",
+                "</span>ns<span class="hljs-string">" : "</span>training.bigdata<span class="hljs-string">"
+        }
+]
+&gt; db.bigdata.dropIndex("</span>balance_1<span class="hljs-string">")
+{ "</span>nIndexesWas<span class="hljs-string">" : 2, "</span>ok<span class="hljs-string">" : 1 }
+&gt; db.bigdata.find({"</span>balance<span class="hljs-string">":10000}).explain("</span>executionStats<span class="hljs-string">").executionStats.executionTimeMillis
+97
+&gt; </span></code></pre></div>
+<h3 id="aggregate-framework">Aggregate framework</h3>
+<div><pre class="hljs"><code>db<span class="hljs-selector-class">.marks</span><span class="hljs-selector-class">.aggregate</span>(<span class="hljs-selector-attr">[{<span class="hljs-string">"$limit"</span>:2}]</span>)</code></pre></div>
+<p>This command sorts the documents based on field marks in ascending order.</p>
+<div><pre class="hljs"><code>db<span class="hljs-selector-class">.marks</span><span class="hljs-selector-class">.aggregate</span>(<span class="hljs-selector-attr">[{<span class="hljs-string">"$sort"</span>:{<span class="hljs-string">"marks"</span>:1}}]</span>)</code></pre></div>
+<p>This command sort the documents based on field marks in descending order.</p>
+<div><pre class="hljs"><code>db<span class="hljs-selector-class">.marks</span><span class="hljs-selector-class">.aggregate</span>(<span class="hljs-selector-attr">[{<span class="hljs-string">"$sort"</span>:{<span class="hljs-string">"marks"</span>:-1}}]</span>)</code></pre></div>
+<p>sorting and limiting</p>
+<ol>
+<li><code>db.marks.aggregate([</code></li>
+<li><code>{"$sort":{"marks":-1}},</code></li>
+<li><code>{"$limit":2}</code></li>
+<li><code>])</code></li>
+</ol>
+<p>The operator $group by, along with operators like $sum, $avg, $min, $max, allows us to perform grouping operations.`<br />
+This aggregation pipeline prints the average marks across all subjects.</p>
+<div><pre class="hljs"><code>db.marks.aggregate([
+    {
+    <span class="hljs-string">"<span class="hljs-variable">$group</span>"</span>:{
+        <span class="hljs-string">"_id"</span>:<span class="hljs-string">"<span class="hljs-variable">$subject</span>"</span>,
+        <span class="hljs-string">"average"</span>:{<span class="hljs-string">"<span class="hljs-variable">$avg</span>"</span>:<span class="hljs-string">"<span class="hljs-variable">$marks</span>"</span>}
+        }
+    }
+])</code></pre></div>
+<p>putting it all together</p>
+<div><pre class="hljs"><code>    {
+        <span class="hljs-string">"<span class="hljs-variable">$group</span>"</span>:{
+            <span class="hljs-string">"_id"</span>:<span class="hljs-string">"<span class="hljs-variable">$name</span>"</span>,
+            <span class="hljs-string">"average"</span>:{<span class="hljs-string">"<span class="hljs-variable">$avg</span>"</span>:<span class="hljs-string">"<span class="hljs-variable">$marks</span>"</span>}
+            }
+    },
+    {
+        <span class="hljs-string">"<span class="hljs-variable">$sort</span>"</span>:{<span class="hljs-string">"average"</span>:-1}
+    },
+    {
+        <span class="hljs-string">"<span class="hljs-variable">$limit</span>"</span>:2
+    }
+])</code></pre></div>
+</div>
+      </article>
+    </div>
+  </body>
+</html>
